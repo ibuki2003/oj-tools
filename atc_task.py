@@ -3,14 +3,43 @@ import requests
 from bs4 import BeautifulSoup
 import atcoder_client
 import time
+import datetime
 ATCODER_TASK_URL = 'https://atcoder.jp/contests/{contest}/tasks/{task}'
 ATCODER_TASKS_URL = 'https://atcoder.jp/contests/{contest}/tasks/'
+ATCODER_CONTEST_URL = 'https://atcoder.jp/contests/{contest}/'
 RETRY_COUNT = 3
 RETRY_INTERVAL = 1
+JST = datetime.timezone(datetime.timedelta(hours=9), name='JST')
 
 class Contest:
     def __init__(self, name):
         self.name=name
+    def exists(self):
+        retry = RETRY_COUNT
+        atccli = atcoder_client.get_client()
+        while retry:
+            retry -= 1
+            r = atccli.request(ATCODER_CONTEST_URL.format(contest=self.name))
+            if r.status_code == requests.codes.ok:
+                break
+            else:
+                st=r.status_code
+        else:
+            return False
+        soup = BeautifulSoup(r.text, 'lxml')
+        start_time_url = soup.find('small', class_='contest-duration').find('a').get('href')
+
+        found_pos=start_time_url.find('?iso=')
+        if found_pos != -1:
+            start_time_str = start_time_url[found_pos+5 : found_pos+18]
+            start_time=datetime.datetime.strptime(start_time_str, '%Y%m%dT%H%M').replace(tzinfo=JST)
+            if start_time > datetime.datetime.now(JST):
+                remain_time = (start_time - datetime.datetime.now(JST))
+                print('the contest will start in', remain_time)
+                print('waiting for contest start.')
+                print('terminate to abort')
+                time.sleep(remain_time.total_seconds() + 1)
+        return True
     def get_all_tasks(self):
         retry = RETRY_COUNT
         atccli = atcoder_client.get_client()
