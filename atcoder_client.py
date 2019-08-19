@@ -64,7 +64,7 @@ class AtCoderClient(metaclass=Singleton):
                 return
 
         r = self.request("https://atcoder.jp/login")
-        csrf = re.search('name="csrf_token" value=\'(.+?)\'', r.text).group(1)
+        csrf = re.search(r'name=[\'"]csrf_token[\'"] value=[\'"](.+?)[\'"]', r.text).group(1)
         csrf = html.unescape(csrf)
         if username is None:
             username = input('username: ')
