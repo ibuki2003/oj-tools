@@ -5,6 +5,7 @@ import atc_getter
 import pathlib
 import subprocess
 import time
+import color
 
 TL = 2  # sec
 
@@ -38,18 +39,22 @@ def test(args):
         task.get()
 
     allAC=True
+    res_all={}
     for testcase_in in sorted(taskdir.glob('in/*')):
         testcase_out = taskdir / 'out' / testcase_in.name
-        print('Running testcase ', testcase_in.name, '===========================')
+        print(color.CYAN, 'Running testcase ', testcase_in.name, color.END)
         print('stderr===========', flush=True)
         res = judge(cmd,
                     str(testcase_in),
                     str(testcase_out))
-        print('=================')
-        print(res[0], res[1], 'ms', flush=True)
+        print('=================', flush=True)
+        res_all[testcase_in.name]=res
         if res[0]!='AC':
             allAC=False
-    print('all AC:',allAC)
+    for res in res_all:
+        print((color.GREEN if res_all[res][0]=='AC' else color.RED),
+            res,'\t:', res_all[res][0], res_all[res][1], 'ms', color.END)
+    print('all AC\t:', (color.GREEN if allAC else color.RED), allAC, color.END)
 
 
 def judge(cmd, in_file, out_file):
