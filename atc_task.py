@@ -61,7 +61,6 @@ class Contest:
 
 class Task:
     def __init__(self, *taskid):
-        print(taskid)
         if len(taskid)==2:
             self.contest,self.taskname=taskid
             if not isinstance(self.contest, Contest):
