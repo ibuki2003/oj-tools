@@ -3,6 +3,7 @@
 import atc_getter
 import atc_tester
 import atcoder_client
+import initialize
 import os
 
 import sys
@@ -21,6 +22,10 @@ try:
         atc_tester.test(sys.argv[2:])
     elif sys.argv[1]=='login':
         atcoder_client.AtCoderClient().login()
+    elif sys.argv[1]=='init':
+        initialize.init()
+        if len(sys.argv)>=3:
+            atc_getter.get(sys.argv[2:])
     else:
         print('unknown param')
         exit(-1)
