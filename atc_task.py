@@ -94,6 +94,8 @@ class Task:
                 (self.get_dir()/'in').mkdir(parents=True, exist_ok=True)
                 (self.get_dir()/'out').mkdir(parents=True, exist_ok=True)
 
+                with open('testcases/'+self.contest.name+'/'+self.taskname+'.html', 'w') as f:
+                    f.write(r.text)
                 in_cnt = 1
                 out_cnt = 1
 
