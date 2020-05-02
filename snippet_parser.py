@@ -4,7 +4,7 @@ import json
 from jsoncomment import JsonComment
 
 SNIPPETS_PATH = '/home/fuwa/.config/Code/User/snippets/cpp.json'
-SNIPPET_KEY = '競プロテンプレ'
+SNIPPET_KEY = 'template.cpp'
 
 def get_snippet_text():
     parser = JsonComment(json)
