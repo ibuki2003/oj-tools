@@ -3,7 +3,7 @@ import snippet_parser
 import subprocess
 import os
 
-BITS_STDCXX_PATH = '/usr/include/c++/9.3.0/x86_64-pc-linux-gnu/bits/stdc++.h'
+BITS_STDCXX_PATH = '/usr/include/c++/10.1.0/x86_64-pc-linux-gnu/bits/stdc++.h'
 
 def init():
     snippet_parser.save_from_snippet_texts([
