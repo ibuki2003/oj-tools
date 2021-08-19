@@ -11,4 +11,6 @@ def init():
         'd.cpp',
         'e.cpp',
         'f.cpp',
+        'g.cpp',
+        'h.cpp',
     ])
