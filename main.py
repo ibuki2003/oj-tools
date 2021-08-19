@@ -1,4 +1,4 @@
-#!python
+#!/bin/python
 # -*- coding: utf-8 -*-
 import atc_getter
 import atc_tester
